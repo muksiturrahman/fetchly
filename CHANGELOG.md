@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+- **Fixed:** in **Add URL**, the list of qualities was invisible (squeezed to zero height), so it looked like nothing happened. It now always shows.
+- **Download** in Add URL uses the qualities already found and takes the best one, instead of searching again.
+- The dialog says "Finding video qualities…" while it searches, and a pasted video-site link is searched as soon as the dialog opens.
+
 ## 1.0.6
 
 - **Fixed:** file names that the server sends percent-encoded (`My%20Movie.mp4`) are now saved readably (`My Movie.mp4`), as browsers do.
