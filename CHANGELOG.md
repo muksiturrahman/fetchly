@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.7
+
+- **Fixed:** a stream link (`.m3u8`) pasted into Add URL or shared to Fetchly saved the playlist's text instead of the video. Now its qualities are listed and the video is saved.
+- **Fixed:** videos from sites that don't say their height were named `… [NAp].mp4`. The quality tag is now left out when it isn't known.
+- Tested on real Windows and Linux machines with every release: start, browser bridge, downloads, the `fetchly://` link, and videos through yt-dlp.
+
 ## 2.0.6
 
 Fetchly 2 is a new app, rebuilt from the ground up so it runs everywhere.
