@@ -1,8 +1,8 @@
 # How Fetchly works
 
-Fetchly is two small programs that talk to each other on your Mac:
+Fetchly is two small programs that talk to each other on your computer:
 
-- a native **SwiftUI app**, which does the downloading;
+- the **Fetchly app** (built with Flutter for macOS, Windows, Linux and Android), which does the downloading;
 - a **Chrome extension** (Manifest V3), which watches the browser.
 
 The app drives two well-known command-line tools when it needs them: **yt-dlp** for video sites and **ffmpeg** for joining streams.
@@ -14,7 +14,7 @@ flowchart LR
     BG["background.js<br/>download capture · media sniffing · cookies"]
     PU["popup"]
   end
-  subgraph App["Fetchly.app (SwiftUI)"]
+  subgraph App["Fetchly app"]
     SRV["LocalServer<br/>127.0.0.1:6801"]
     DM["DownloadManager<br/>queue · progress · saving"]
     H["HTTPEngine<br/>multi-connection files"]
@@ -39,7 +39,7 @@ A server sends a file faster when it's asked for several pieces at once, so Fetc
 
 1. **Probe.** The first request asks for `Range: bytes=0-`. A `206 Partial Content` answer with `Content-Range` tells Fetchly the exact size and that the server can resume. The file name comes from `Content-Disposition`, then from the link, then from the MIME type.
 2. **Plan.** The file is cut into up to *N* equal parts (8 by default, up to 32), each at least 1 MB. The `.fetchly` partial file is created at its full size up front.
-3. **Download.** Each part runs on **its own `URLSession`**, so every part really gets its own TCP connection instead of sharing one HTTP/2 connection. Each part writes its bytes straight to its own offset in the file.
+3. **Download.** Each part runs on **its own HTTP client**, so every part really gets its own TCP connection instead of sharing one HTTP/2 connection. Each part writes its bytes straight to its own offset in the file. The whole download runs in its own background thread (a Dart isolate), so the window stays smooth however fast the data comes in.
 4. **Dynamic splitting** (the IDM trick). When a connection finishes its part early, it takes over the **second half of the biggest part still running**, as long as at least 2 MB is left there. The slower connection's part is shortened, and anything it receives past its new end is cut off. So fast connections never sit idle near the end of a download.
 
 ```
@@ -134,6 +134,6 @@ The app runs a small HTTP server, so it's locked down:
 
 ## 7 · Releases
 
-- Every release is a single **universal** app (Apple Silicon + Intel) for macOS 14 or later, ad-hoc signed.
+- Every release has a **universal** Mac app (Apple Silicon + Intel, macOS 12 or later, ad-hoc signed), a Windows and a Linux build (64-bit), and Android APKs signed with Fetchly's own release key.
 - The app, the extension and the [changelog](../CHANGELOG.md) always carry the same version number, so you can check that an update reached both.
-- The images in these docs are made with the real app and extension, using demo data and generated videos.
+- Some screenshots still show Fetchly 1's Mac window; the downloads list, picker and popup work the same in Fetchly 2.

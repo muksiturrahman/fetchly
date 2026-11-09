@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.6
+
+Fetchly 2 is a new app, rebuilt from the ground up so it runs everywhere.
+
+- **Now on Windows, Linux and Android,** as well as Mac. Same features on every computer: multi-connection downloads, resume, the Chrome extension, and YouTube up to 4K.
+- **Android:** add a link, or **Share → Fetchly** from any app. Files go to Download/Fetchly. (YouTube needs a computer; files and streams work on the phone.)
+- **Smoother at high speed:** each download runs on its own thread, so the window never stutters, even above 400 MB/s.
+- **Streams without ffmpeg:** HLS (`.m3u8`) streams that aren't encrypted are saved even when ffmpeg isn't installed.
+- **Mac:** works on macOS 12 and later (was 14). Your download list from Fetchly 1 is kept.
+- **Extension:** no more "Extension context invalidated" errors after the extension updates; an old tab asks you to reload the page instead.
+
 ## 1.0.7
 
 - **Fixed:** in **Add URL**, the list of qualities was invisible (squeezed to zero height), so it looked like nothing happened. It now always shows.
