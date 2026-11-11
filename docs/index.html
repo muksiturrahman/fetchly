@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Download Fetchly</title>
+<meta name="description" content="Fetchly — a fast download manager for Mac, Windows, Linux and Android, with one-click video downloads from Chrome.">
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --bg: #f6f7fb; --card: #ffffff; --text: #141821; --muted: #5d6675; --line: #e3e6ee;
+    --accent: #2f7cf6; --accent-text: #ffffff; --soft: #eef3fe; --ok: #1f9d55; --warn-bg: #fff6e5; --warn: #8a5a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1218; --card: #171b23; --text: #e9edf3; --muted: #9aa4b2; --line: #262c37;
+      --accent: #4b8ff8; --accent-text: #ffffff; --soft: #1c2638; --ok: #3ccf7e; --warn-bg: #2b2414; --warn: #f0c36b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  a { color: var(--accent); }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 40px 16px 64px; }
+  header { text-align: center; }
+  header img { width: 88px; height: 88px; }
+  h1 { margin: 10px 0 4px; font-size: 40px; letter-spacing: -0.02em; }
+  .tag { margin: 0 auto; max-width: 560px; color: var(--muted); }
+  .chips { margin: 14px 0 0; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .chip { font-size: 13px; padding: 3px 10px; border-radius: 99px; background: var(--soft); color: var(--text); }
+
+  .card { margin-top: 32px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .pick { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .pick label { font-weight: 600; }
+  select { font: inherit; padding: 9px 36px 9px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--text); appearance: none; cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; }
+  .detected { color: var(--muted); font-size: 14px; }
+
+  .get { margin-top: 22px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; background: var(--accent);
+    color: var(--accent-text); font-weight: 650; font-size: 18px; padding: 14px 22px; border-radius: 12px; }
+  .btn:hover { filter: brightness(1.08); }
+  .btn svg { width: 20px; height: 20px; }
+  .meta { color: var(--muted); font-size: 14px; }
+  .also { margin-top: 10px; font-size: 14px; color: var(--muted); }
+  .also a { margin-right: 14px; }
+
+  h2 { margin: 28px 0 10px; font-size: 20px; }
+  ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+  ol.steps li { position: relative; padding: 0 0 14px 44px; counter-increment: s; }
+  ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--soft); color: var(--accent); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+  code { font: 13.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--soft); padding: 2px 6px; border-radius: 6px;
+    overflow-wrap: anywhere; }
+  .note { margin-top: 18px; padding: 12px 14px; border-radius: 10px; background: var(--warn-bg); color: var(--warn); font-size: 14.5px; }
+  .guide { display: inline-block; margin-top: 8px; font-weight: 600; }
+
+  .features { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .feature { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .feature b { display: block; margin-bottom: 4px; }
+  .feature span { color: var(--muted); font-size: 14.5px; }
+  .shot { margin-top: 32px; text-align: center; }
+  .shot img { max-width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+  footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 14px; }
+  footer a { margin: 0 8px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 520px) { h1 { font-size: 32px; } .card { padding: 18px; } .btn { width: 100%; justify-content: center; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon.png" alt="Fetchly icon">
+    <h1>Fetchly</h1>
+    <p class="tag">A fast download manager with one-click video downloads from Chrome. Many connections per file, resume after anything, YouTube up to 4K. Free.</p>
+    <div class="chips"><span class="chip">Mac</span><span class="chip">Windows</span><span class="chip">Linux</span><span class="chip">Android</span><span class="chip" id="version">Latest release</span></div>
+  </header>
+
+  <section class="card" aria-label="Download">
+    <div class="pick">
+      <label for="os">Download for</label>
+      <select id="os">
+        <option value="mac">Mac</option>
+        <option value="windows">Windows</option>
+        <option value="linux">Linux</option>
+        <option value="android">Android</option>
+        <option value="ios">iPhone / iPad</option>
+      </select>
+      <span class="detected" id="detected"></span>
+    </div>
+    <div id="panel"></div>
+  </section>
+
+  <div class="features">
+    <div class="feature"><b>🚀 Faster downloads</b><span>Every file comes in parallel parts over up to 32 connections. A connection that finishes early takes over half of the slowest part.</span></div>
+    <div class="feature"><b>⏯️ Resume after anything</b><span>Pause, lose Wi-Fi, quit or crash: each part continues exactly where it stopped.</span></div>
+    <div class="feature"><b>🎬 Videos in one click</b><span>Play a video in Chrome and a Download video bar appears. Pick 4K, 1080p, audio only or MP3. YouTube and ~1,800 sites.</span></div>
+    <div class="feature"><b>🔒 Private and light</b><span>Everything stays on your device. About 20 MB, nothing running in the background, no history kept.</span></div>
+  </div>
+
+  <div class="shot"><img src="screenshots/quality-picker.png" alt="The quality picker over a video in Chrome" loading="lazy"></div>
+
+  <footer>
+    <a href="https://github.com/muksiturrahman/fetchly">GitHub</a>·
+    <a href="https://github.com/muksiturrahman/fetchly/releases">All releases</a>·
+    <a href="https://github.com/muksiturrahman/fetchly/blob/main/CHANGELOG.md">What's new</a>·
+    <a href="https://github.com/muksiturrahman/fetchly/issues">Report a problem</a>
+    <p>Only download what you have the right to download. © 2026 Muksitur Rahman.</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const REPO = 'muksiturrahman/fetchly';
+  const DL = `https://github.com/${REPO}/releases/latest/download/`;
+  const GUIDE = `https://github.com/${REPO}/blob/main/docs/install/`;
+  const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>';
+  const NAMES = { mac: 'Mac', windows: 'Windows', linux: 'Linux', android: 'Android', ios: 'iPhone / iPad' };
+
+  // Everything each system needs: the main file, other files, requirements, steps and the full guide.
+  const OS = {
+    mac: {
+      file: 'Fetchly.dmg', label: 'Download for Mac', needs: 'macOS 12 or later · Apple Silicon and Intel',
+      also: [['Fetchly.zip', 'Same app as a zip']],
+      steps: [
+        'Open <b>Fetchly.dmg</b> and drag Fetchly onto <b>Applications</b>.',
+        'Open Fetchly. The first time, macOS asks you to confirm: <b>System Settings → Privacy &amp; Security → Open Anyway</b>.',
+        'In the setup guide, click <b>Copy Folder Path &amp; Open Chrome</b>, turn on <b>Developer mode</b>, click <b>Load unpacked</b>, press <b>⇧⌘G</b>, paste, <b>Select</b>.',
+        'Click <b>Download yt-dlp</b> for YouTube and other video sites. For 1080p+ and 4K, also run <code>brew install ffmpeg</code>.',
+      ],
+      guide: 'mac.md',
+    },
+    windows: {
+      file: 'Fetchly-Windows.zip', label: 'Download for Windows', needs: 'Windows 10 or 11 · 64-bit',
+      also: [],
+      steps: [
+        'Right-click <b>Fetchly-Windows.zip</b> → <b>Extract All…</b> into a folder you keep.',
+        'Run <b>fetchly.exe</b>. If <b>Windows protected your PC</b> appears: <b>More info → Run anyway</b>.',
+        'In the setup guide, click <b>Copy Folder Path &amp; Open Chrome</b>, turn on <b>Developer mode</b>, click <b>Load unpacked</b>, paste the path into the address bar, <b>Select Folder</b>.',
+        'Click <b>Download yt-dlp</b>. For 1080p+ and 4K: <code>winget install ffmpeg</code>; for YouTube: <code>winget install OpenJS.NodeJS</code>.',
+      ],
+      guide: 'windows.md',
+    },
+    linux: {
+      file: 'Fetchly-Linux.tar.gz', label: 'Download for Linux', needs: '64-bit · GTK 3 (Ubuntu, Debian, Fedora, Mint …)',
+      also: [],
+      steps: [
+        'Extract it: <code>mkdir -p ~/Applications/Fetchly && tar -xzf Fetchly-Linux.tar.gz -C ~/Applications/Fetchly</code>',
+        'Run <code>~/Applications/Fetchly/fetchly</code>. It adds itself to your applications menu.',
+        'In the setup guide, click <b>Copy Folder Path &amp; Open Chrome</b>, turn on <b>Developer mode</b>, click <b>Load unpacked</b>, press <b>Ctrl+L</b>, paste, <b>Select</b>.',
+        'Click <b>Download yt-dlp</b>. For 1080p+ and 4K: <code>sudo apt install ffmpeg nodejs</code>.',
+      ],
+      guide: 'linux.md',
+    },
+    android: {
+      file: 'Fetchly-Android.apk', label: 'Download for Android', needs: 'Android 7 or later · almost every phone',
+      also: [['Fetchly-Android-armv7.apk', 'For very old 32-bit phones']],
+      steps: [
+        'Tap the downloaded <b>Fetchly-Android.apk</b>. Allow installing apps from your browser when asked, then tap <b>Install</b>.',
+        'If Play Protect warns: <b>More details → Install anyway</b> (Fetchly isn\'t in the Play Store).',
+        'Open Fetchly and tap <b>Add URL</b>, or in any app tap <b>Share → Fetchly</b>. Files go to <b>Download/Fetchly</b>.',
+      ],
+      note: 'On Android: files, streams and YouTube up to 1080p with sound. 4K and sites that hide their videos need the computer app.',
+      guide: 'android.md',
+    },
+    ios: {
+      none: true,
+      note: 'There\'s no iPhone or iPad version: iOS installs apps only from the App Store, which doesn\'t allow video downloaders. Fetchly runs on Mac, Windows, Linux and Android — choose one above.',
+    },
+  };
+
+  function detect() {
+    const ua = navigator.userAgent || '';
+    const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+    if (/android/i.test(ua)) return 'android';
+    if (/iphone|ipad|ipod/i.test(ua) || (/mac/i.test(platform) && navigator.maxTouchPoints > 1)) return 'ios';
+    if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
+    if (/mac/i.test(platform) || /mac os/i.test(ua)) return 'mac';
+    if (/linux|x11|cros/i.test(platform + ' ' + ua)) return 'linux';
+    return null;
+  }
+
+  const sizes = {};
+  const mb = (n) => n ? `${(n / 1e6).toFixed(n < 1e7 ? 1 : 0)} MB` : '';
+
+  function render(key) {
+    const o = OS[key];
+    const panel = document.getElementById('panel');
+    if (o.none) {
+      panel.innerHTML = `<div class="note">${o.note}</div>`;
+      return;
+    }
+    const size = mb(sizes[o.file]);
+    panel.innerHTML = `
+      <div class="get">
+        <a class="btn" href="${DL}${o.file}">${ICON}${o.label}</a>
+        <span class="meta">${o.file}${size ? ' · ' + size : ''}<br>${o.needs}</span>
+      </div>
+      ${o.also.length ? `<div class="also">${o.also.map(([f, t]) => `<a href="${DL}${f}">${f}</a><span>${t}${mb(sizes[f]) ? ' · ' + mb(sizes[f]) : ''}</span>`).join(' ')}</div>` : ''}
+      <h2>Install in a few minutes</h2>
+      <ol class="steps">${o.steps.map((s) => `<li>${s}</li>`).join('')}</ol>
+      ${o.note ? `<div class="note">${o.note}</div>` : ''}
+      <a class="guide" href="${GUIDE}${o.guide}">Full guide with pictures, updating and troubleshooting →</a>`;
+  }
+
+  const select = document.getElementById('os');
+  const fromLink = location.hash.slice(1);
+  const found = detect();
+  const start = OS[fromLink] ? fromLink : (found || 'mac');
+  select.value = start;
+  document.getElementById('detected').textContent = found ? `Detected: ${NAMES[found]}` : '';
+  render(start);
+  select.addEventListener('change', () => {
+    history.replaceState(null, '', '#' + select.value);
+    render(select.value);
+  });
+
+  // The latest version and file sizes, from GitHub. The page works without them.
+  fetch(`https://api.github.com/repos/${REPO}/releases/latest`)
+    .then((r) => r.ok ? r.json() : null)
+    .then((rel) => {
+      if (!rel) return;
+      for (const a of rel.assets || []) sizes[a.name] = a.size;
+      if (rel.tag_name) document.getElementById('version').textContent = `Latest: ${rel.tag_name}`;
+      render(select.value);
+    })
+    .catch(() => {});
+})();
+</script>
+</body>
+</html>
