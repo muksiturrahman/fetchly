@@ -1,0 +1,26 @@
+Fetchly — Freeware License
+
+Copyright (c) 2026 Muksitur Rahman. All rights reserved.
+
+Fetchly (the app and its Chrome extension) is free to download and use, for personal and commercial
+purposes, on any number of Macs.
+
+You may:
+  - download, install and use Fetchly;
+  - share the official download links or the unmodified release files.
+
+You may not:
+  - sell Fetchly or include it in a paid product or bundle;
+  - modify, decompile or reverse-engineer it, except where the law allows this regardless of this license;
+  - distribute modified copies, or present Fetchly as your own work.
+
+You are responsible for what you download with Fetchly. Only download content you have the right to download,
+and respect each website's terms of service and copyright law.
+
+Fetchly uses separate tools only if you install them: yt-dlp (https://github.com/yt-dlp/yt-dlp) and ffmpeg
+(https://ffmpeg.org). They are not part of Fetchly and come with their own licenses.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
